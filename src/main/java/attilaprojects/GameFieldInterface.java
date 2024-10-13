@@ -1,6 +1,6 @@
 package attilaprojects;
 
 public interface GameFieldInterface {
-    public int[][] deepcopyFieldArray();
-    public boolean[][] deepcopyFieldIsSetArray();
+    public int[][] deepcopyFieldArray(int[][] field);
+    public boolean[][] deepcopyFieldIsSetArray(boolean[][] fieldIsSet);
 }

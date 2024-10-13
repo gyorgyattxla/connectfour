@@ -14,12 +14,12 @@ public class GameField implements GameFieldInterface{
     }
     /** Made getField a deep-copy, so that the original array stays independent **/
     public int[][] getField() {
-        return deepcopyFieldArray();
+        return deepcopyFieldArray(this.field);
     }
 
     /** Made getFieldIsSet a deep-copy, so that the original array stays independent **/
     public boolean[][] getFieldIsSet() {
-        return deepcopyFieldIsSetArray();
+        return deepcopyFieldIsSetArray(this.fieldIsSet);
     }
 
     /** Equals method **/
@@ -41,8 +41,8 @@ public class GameField implements GameFieldInterface{
     }
 
     /** deepcopyFieldArray method copies the data from itself into result **/
-    @Override
-    public int[][] deepcopyFieldArray() {
+
+    public int[][] deepcopyFieldArray(int[][] field) {
         int[][] result = new int[field.length][];
         for (int i = 0; i < field.length; i++) {
             result[i] = field[i];
@@ -53,8 +53,7 @@ public class GameField implements GameFieldInterface{
         return result;
     }
 
-    @Override
-    public boolean[][] deepcopyFieldIsSetArray() {
+    public boolean[][] deepcopyFieldIsSetArray(boolean[][] fieldIsSet) {
         boolean[][] result = new boolean[fieldIsSet.length][];
         for (int i = 0; i < fieldIsSet.length; i++) {
             result[i] = fieldIsSet[i];
