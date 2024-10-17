@@ -38,13 +38,9 @@ public class GameField implements GameFieldInterface{
             if(this.field[i][column] == '#'){
                 this.field[i][column] = player;
                 placed = true;
-            }else {
+            }else{
                 i--;
             }
-            //if(i==0){
-            //    System.out.println("Could not place move");
-            //    break;
-            //}
         }
     }
 

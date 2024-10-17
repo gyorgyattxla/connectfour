@@ -86,7 +86,6 @@ public class Main
             while (!gameStepHandler.checkColumn(computerMove)) {
                 computerMove = gameStepHandler.computerMadeMove();
             }
-            System.out.println(computerMove);
 
             //Applying the computerMove to gameField
             gameStepHandler.applyMove(computerMove);
