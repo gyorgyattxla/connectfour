@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class GameFieldReader implements GameFieldReaderInterface{
     private final GameField gameField;
 
-    public GameFieldReader(GameField gameField) {
+    public GameFieldReader(GameField gameField){
         this.gameField = gameField;
     }
 

@@ -12,12 +12,11 @@ public class GameField implements GameFieldInterface{
     /** Establishing the playing field **/
     private final char[][] field;
 
-    /** Constructor
-     * -- makes the field empty on default,
-     * making it easier to get the 'fieldReader' and 'fieldWriter' working more efficiently later */
-    public GameField(char[][] field, int rowCount, int colCount) {
-        this.field = field;
+    /** Constructor **/
+    public GameField() {
+        this.field = new char[rowCount][colCount];
     }
+
 
     /** Made getField a deep-copy, so that the original array stays independent **/
     public char[][] getField() {
@@ -33,7 +32,20 @@ public class GameField implements GameFieldInterface{
     }
 
     public void setField(int column, char player){
-        this.field[column][colCount] = player;
+        boolean placed = false;
+        int i = rowCount-1;
+        while(!placed){
+            if(this.field[i][column] == '#'){
+                this.field[i][column] = player;
+                placed = true;
+            }else {
+                i--;
+            }
+            //if(i==0){
+            //    System.out.println("Could not place move");
+            //    break;
+            //}
+        }
     }
 
     /** rowCount & colCount getter methods **/

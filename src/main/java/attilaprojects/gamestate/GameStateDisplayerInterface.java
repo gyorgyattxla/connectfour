@@ -1,5 +1,5 @@
 package attilaprojects.gamestate;
 
 public interface GameStateDisplayerInterface {
-    public void displayGameState();
+    public void displayGameState(String playerName);
 }

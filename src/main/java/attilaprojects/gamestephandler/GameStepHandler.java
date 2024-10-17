@@ -17,34 +17,27 @@ public class GameStepHandler implements GameStepHandlerInterface{
 
     /** Translates a character userInput into an integer that other methods can use **/
     @Override
-    public boolean translatePlayerMove(char userInput) {
+    public int translatePlayerMove(String userInput) {
         switch (userInput){
-            case ('A'):
-                translatedInput = 0;
-                return true;
-            case ('B'):
-                translatedInput = 1;
-                return true;
-            case ('C'):
-                translatedInput = 2;
-                return true;
-            case ('D'):
-                translatedInput = 3;
-                return true;
-            case ('E'):
-                translatedInput = 4;
-                return true;
-            case ('F'):
-                translatedInput = 5;
-                return true;
-            case ('G'):
-                translatedInput = 6;
-                return true;
+            case ("A"):
+                return translatedInput = 0;
+            case ("B"):
+                return translatedInput = 1;
+            case ("C"):
+                return translatedInput = 2;
+            case ("D"):
+                return translatedInput = 3;
+            case ("E"):
+                return translatedInput = 4;
+            case ("F"):
+                return translatedInput = 5;
+            case ("G"):
+                return translatedInput = 6;
             default:
                 System.out.println("Not valid character input. [USE A-G]");
                 break;
         }
-        return false;
+        return -1;
     }
 
     /** Uses the 'translatedInput' to apply the move to the field **/
@@ -55,7 +48,7 @@ public class GameStepHandler implements GameStepHandlerInterface{
         }else{
             gameField.setField(translatedInput,'P');
             }
-        madeMoves+=1;
+        madeMoves += 1;
     }
 
     @Override
@@ -68,7 +61,7 @@ public class GameStepHandler implements GameStepHandlerInterface{
     @Override
     public boolean checkColumn(int translatedInput) {
         int spacesLeft = 0;
-        for (int i = gameField.getRowCount(); i >= 0; i--) {
+        for (int i = 0; i < gameField.getRowCount(); i++) {
             if (gameField.getField()[i][translatedInput] == '#') {
                 spacesLeft += 1;
             }else break;
@@ -242,6 +235,13 @@ public class GameStepHandler implements GameStepHandlerInterface{
                 j++;
             }
             max--;
+        }
+        return false;
+    }
+    @Override
+    public boolean isFieldFilled(){
+        if(madeMoves >= (gameField.getRowCount()*gameField.getColCount())){
+            return true;
         }
         return false;
     }

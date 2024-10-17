@@ -1,18 +1,13 @@
 package attilaprojects.player;
 
-public class PlayerNameReader implements PlayerNameReaderInterface{
-    private String playerName;
+import java.util.Scanner;
 
-    public PlayerNameReader(String playerName) {
-        this.playerName = playerName;
-    }
+public class PlayerNameReader implements PlayerNameReaderInterface{
 
     @Override
-    public void inputPlayerName(String input) {
-        this.playerName = input;
-    }
-
-    public String getPlayerName() {
-        return playerName;
+    public String inputPlayerName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nEnter Player Name: ");
+        return scanner.nextLine();
     }
 }
