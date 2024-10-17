@@ -54,7 +54,7 @@ public class Main
             System.out.println("Make a move! [USE A - G]");
             String playerMove = scanner.nextLine();
             //Player redoes the move until it is in valid format
-            while (gameStepHandler.translatePlayerMove(playerMove) < 0 && gameStepHandler.translatePlayerMove(playerMove) > 6) {
+            while (gameStepHandler.translatePlayerMove(playerMove) == -1 ) {
                 System.out.println("[USE A - G]");
                 playerMove = scanner.nextLine();
             }
@@ -81,7 +81,7 @@ public class Main
             playerWon = gameStepHandler.checkPlayerWinState();
 
             //Computer makes a move
-            System.out.println("Cumputer makes a move!");
+            System.out.println("Computer makes a move!");
             int computerMove = gameStepHandler.computerMadeMove();
             while (!gameStepHandler.checkColumn(computerMove)) {
                 computerMove = gameStepHandler.computerMadeMove();
@@ -93,13 +93,12 @@ public class Main
 
             //Check if the computer has won yet
             computerWon = gameStepHandler.checkComputerWinState();
-
-            //Display the field
-            gameStateDisplayer.displayGameState(playerName);
         }
+
         if (playerWon) System.out.println(playerName + " has won!");
         if (computerWon) System.out.println("Computer has won!");
         if (isFilled) System.out.println("The board has been filled...");
+        gameStateDisplayer.displayGameState(playerName);
     }
 }
 

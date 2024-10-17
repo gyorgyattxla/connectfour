@@ -35,9 +35,8 @@ public class GameStepHandler implements GameStepHandlerInterface{
                 return translatedInput = 6;
             default:
                 System.out.println("Not valid character input. [USE A-G]");
-                break;
+                return -1;
         }
-        return -1;
     }
 
     /** Uses the 'translatedInput' to apply the move to the field **/
