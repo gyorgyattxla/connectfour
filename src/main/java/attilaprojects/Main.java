@@ -3,6 +3,7 @@ package attilaprojects;
 import attilaprojects.gamefield.GameField;
 import attilaprojects.gamefield.GameFieldReader;
 
+import attilaprojects.gamefield.GameFieldSaver;
 import attilaprojects.gamestate.GameStateDisplayer;
 import attilaprojects.gamestephandler.GameStepHandler;
 import attilaprojects.player.PlayerNameReader;
@@ -21,6 +22,7 @@ public class Main
         GameField gameField = new GameField();
 
         GameFieldReader gameFieldReader = new GameFieldReader(gameField);
+        GameFieldSaver gameFieldSaver = new GameFieldSaver(gameField);
         GameStepHandler gameStepHandler = new GameStepHandler(gameField);
         GameStateDisplayer gameStateDisplayer = new GameStateDisplayer(gameField);
         PlayerNameReader playerNameReader = new PlayerNameReader();
@@ -98,6 +100,17 @@ public class Main
         if (computerWon) System.out.println("Computer has won!");
         if (isFilled) System.out.println("The board has been filled...");
         gameStateDisplayer.displayGameState(playerName);
+        System.out.println("Want to save this field? [USE Y / N]");
+        String wantToSave = scanner.nextLine();
+        while( !(wantToSave.equals("Y")) && !(wantToSave.equals("N"))){
+            System.out.println("[USE Y / N]");
+            wantToSave = scanner.nextLine();
+        }
+        if (wantToSave.equals("Y")){
+            System.out.print("Enter filename: ");
+            String inputFilename = scanner.nextLine();
+            gameFieldSaver.saveFieldToFile(gameField, inputFilename);
+        }
     }
 }
 
