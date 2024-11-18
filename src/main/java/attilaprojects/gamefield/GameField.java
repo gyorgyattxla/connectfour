@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class GameField implements GameFieldInterface{
+    private static GameField instance;
+
     /** Establishing the field's row count **/
     private final int rowCount = 6;
     /** Establishing the field's column count **/
@@ -17,6 +19,12 @@ public class GameField implements GameFieldInterface{
         this.field = new char[rowCount][colCount];
     }
 
+    public static GameField getInstance() {
+        if (instance == null) {
+            instance = new GameField();
+        }
+        return instance;
+    }
 
     /** Made getField a deep-copy, so that the original array stays independent **/
     public char[][] getField() {

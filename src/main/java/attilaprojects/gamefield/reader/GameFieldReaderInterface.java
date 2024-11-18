@@ -1,4 +1,4 @@
-package attilaprojects.gamefield;
+package attilaprojects.gamefield.reader;
 
 public interface GameFieldReaderInterface {
     public boolean loadFieldFromFile(String inputFileName);

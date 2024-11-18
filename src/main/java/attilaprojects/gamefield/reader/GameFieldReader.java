@@ -1,4 +1,6 @@
-package attilaprojects.gamefield;
+package attilaprojects.gamefield.reader;
+
+import attilaprojects.gamefield.GameField;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -7,7 +9,7 @@ public class GameFieldReader implements GameFieldReaderInterface{
     private final GameField gameField;
 
     public GameFieldReader(GameField gameField){
-        this.gameField = gameField;
+        this.gameField = GameField.getInstance();
     }
 
     public boolean loadFieldFromFile(String inputFileName) {

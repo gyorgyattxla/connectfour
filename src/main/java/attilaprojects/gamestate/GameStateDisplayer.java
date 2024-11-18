@@ -7,7 +7,7 @@ public class GameStateDisplayer implements GameStateDisplayerInterface{
     private final char[] columns = {'A','B','C','D','E','F','G'};
 
     public GameStateDisplayer(GameField gameField) {
-        this.gameField = gameField;
+        this.gameField = GameField.getInstance();
     }
     @Override
     public void displayGameState(String playerName) {

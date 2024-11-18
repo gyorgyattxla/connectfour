@@ -12,7 +12,7 @@ public class GameStepHandler implements GameStepHandlerInterface{
     private int madeMoves = 0;
 
     public GameStepHandler(GameField gameField) {
-        this.gameField = gameField;
+        this.gameField = GameField.getInstance();
     }
 
     /** Translates a character userInput into an integer that other methods can use **/
@@ -41,13 +41,9 @@ public class GameStepHandler implements GameStepHandlerInterface{
 
     /** Uses the 'translatedInput' to apply the move to the field **/
     @Override
-    public void applyMove(int translatedInput) {
-        if(madeMoves % 2 == 0){
-            gameField.setField(translatedInput,'S');
-        }else{
-            gameField.setField(translatedInput,'P');
-            }
-        madeMoves += 1;
+    public void applyMove(int translatedInput, String player) {
+        if(player.equals("player")) gameField.setField(translatedInput,'S');
+        if(player.equals("computer")) gameField.setField(translatedInput,'P');
     }
 
     @Override

@@ -1,4 +1,6 @@
-package attilaprojects.gamefield;
+package attilaprojects.gamefield.saver;
+
+import attilaprojects.gamefield.GameField;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -8,7 +10,7 @@ public class GameFieldSaver implements GameFieldSaverInterface{
     private final GameField gameField;
 
     public GameFieldSaver(GameField gameField) {
-        this.gameField = gameField;
+        this.gameField = GameField.getInstance();
     }
 
     @Override
