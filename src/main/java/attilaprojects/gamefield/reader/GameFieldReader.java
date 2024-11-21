@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class GameFieldReader implements GameFieldReaderInterface{
     private final GameField gameField;
 
-    public GameFieldReader(GameField gameField){
-        this.gameField = GameField.getInstance();
+    public GameFieldReader(GameField gameField) {
+        this.gameField = gameField;
     }
 
     public boolean loadFieldFromFile(String inputFileName) {
@@ -19,7 +19,7 @@ public class GameFieldReader implements GameFieldReaderInterface{
 
         // Check if the file was found
         if (inputStream == null) {
-            System.out.println("Error: File not found in classpath.");
+            System.err.println("Error: File not found in classpath.");
             setEmptyField();
             return false;
         }
@@ -35,7 +35,7 @@ public class GameFieldReader implements GameFieldReaderInterface{
             gameField.setField(loadedField);
             return true;
         } catch (Exception e) {
-            System.out.println("Error: Could not load field from file.");
+            System.err.println("Error: Could not load field from file.");
             setEmptyField();
             return false;
         }

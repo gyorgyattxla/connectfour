@@ -10,7 +10,7 @@ public class GameFieldSaver implements GameFieldSaverInterface{
     private final GameField gameField;
 
     public GameFieldSaver(GameField gameField) {
-        this.gameField = GameField.getInstance();
+        this.gameField = gameField;
     }
 
     @Override

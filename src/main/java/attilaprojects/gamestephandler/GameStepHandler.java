@@ -12,7 +12,7 @@ public class GameStepHandler implements GameStepHandlerInterface{
     private int madeMoves = 0;
 
     public GameStepHandler(GameField gameField) {
-        this.gameField = GameField.getInstance();
+        this.gameField = gameField;
     }
 
     /** Translates a character userInput into an integer that other methods can use **/
