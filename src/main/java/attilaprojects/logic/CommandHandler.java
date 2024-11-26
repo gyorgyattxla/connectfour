@@ -3,27 +3,23 @@ package attilaprojects.logic;
 import attilaprojects.gamefield.GameField;
 import attilaprojects.gamefield.reader.GameFieldReader;
 import attilaprojects.gamefield.saver.GameFieldSaver;
-import attilaprojects.gamestate.GameStateDisplayer;
-import attilaprojects.gamestephandler.GameStepHandler;
-import attilaprojects.player.PlayerNameReader;
+import attilaprojects.gamestephandler.applier.MoveApplier;
+import attilaprojects.gamestephandler.translator.MoveTranslator;
 
 import java.util.Scanner;
 
 public class CommandHandler {
-
-    GameFieldReader gameFieldReader;
-    GameFieldSaver gameFieldSaver;
-    GameStepHandler gameStepHandler;
-    GameStateDisplayer gameStateDisplayer;
-    PlayerNameReader playerNameReader;
-    GameField gameField = GameField.getInstance();
+    private final GameFieldReader gameFieldReader;
+    private final GameFieldSaver gameFieldSaver;
+    private final MoveApplier moveApplier;
+    private final MoveTranslator moveTranslator;
+    private final GameField gameField = GameField.getInstance();
 
     public CommandHandler(GameField gameField) {
         this.gameFieldReader = new GameFieldReader(gameField);
         this.gameFieldSaver = new GameFieldSaver(gameField);
-        this.gameStepHandler = new GameStepHandler(gameField);
-        this.gameStateDisplayer = new GameStateDisplayer(gameField);
-        this.playerNameReader = new PlayerNameReader();
+        this.moveApplier = new MoveApplier(gameField);
+        this.moveTranslator = new MoveTranslator();
     }
 
     public void commandExecuter(){
@@ -39,27 +35,27 @@ public class CommandHandler {
                     System.out.println("Make a move! [USE A - G]");
                     String playerMove = scanner.nextLine();
                     //Player redoes the move until it is in valid format
-                    while (gameStepHandler.translatePlayerMove(playerMove) == -1 ) {
+                    while (moveTranslator.translatePlayerMove(playerMove) == -1 ) {
                         System.out.println("[USE A - G]");
                         playerMove = scanner.nextLine();
                     }
-                    int translatedMove = gameStepHandler.translatePlayerMove(playerMove);
+                    int translatedMove = moveTranslator.translatePlayerMove(playerMove);
 
                     //Checking if the move is possible
-                    while (!gameStepHandler.checkColumn(translatedMove)) {
+                    while (!moveApplier.checkColumn(translatedMove)) {
 
                         System.out.println("Not a valid move! [USE A - G]");
                         playerMove = scanner.nextLine();
                         //Player redoes the move until it is in valid format
-                        while (gameStepHandler.translatePlayerMove(playerMove) < 0 && gameStepHandler.translatePlayerMove(playerMove) > 6) {
+                        while (moveTranslator.translatePlayerMove(playerMove) < 0 && moveTranslator.translatePlayerMove(playerMove) > 6) {
                             System.out.println("[USE A - G]");
                             playerMove = scanner.nextLine();
                         }
-                        translatedMove = gameStepHandler.translatePlayerMove(playerMove);
+                        translatedMove = moveTranslator.translatePlayerMove(playerMove);
                     }
 
                     //Applying the playerMove to gameField
-                    gameStepHandler.applyMove(translatedMove, "player");
+                    moveApplier.applyMove(translatedMove, "player");
                     validCommand = true;
                     break;
                 }

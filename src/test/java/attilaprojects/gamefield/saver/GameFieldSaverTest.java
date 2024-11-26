@@ -1,6 +1,7 @@
-package attilaprojects.gamefield;
+package attilaprojects.gamefield.saver;
 
 
+import attilaprojects.gamefield.GameField;
 import attilaprojects.gamefield.saver.GameFieldSaver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,27 +4,39 @@ import attilaprojects.gamefield.GameField;
 import attilaprojects.gamefield.reader.GameFieldReader;
 import attilaprojects.gamefield.saver.GameFieldSaver;
 import attilaprojects.gamestate.GameStateDisplayer;
-import attilaprojects.gamestephandler.GameStepHandler;
-import attilaprojects.player.PlayerNameReader;
+import attilaprojects.gamestephandler.applier.MoveApplier;
+import attilaprojects.gamestephandler.translator.MoveTranslator;
+import attilaprojects.gamestephandler.verifier.VerifyNotFull;
+import attilaprojects.gamestephandler.winhandler.computer.CheckComputerWin;
+import attilaprojects.gamestephandler.winhandler.player.CheckPlayerWin;
+import attilaprojects.player.namereader.PlayerNameReader;
 
 import java.util.Scanner;
 
 public class GameLoop {
-    GameFieldReader gameFieldReader;
-    GameFieldSaver gameFieldSaver;
-    GameStepHandler gameStepHandler;
-    GameStateDisplayer gameStateDisplayer;
-    PlayerNameReader playerNameReader;
-    CommandHandler commandHandler;
-    GameField gameField = GameField.getInstance();
+    private final GameFieldReader gameFieldReader;
+    private final GameFieldSaver gameFieldSaver;
+    private final VerifyNotFull verifyNotFull;
+    private final MoveApplier moveApplier;
+    private final MoveTranslator moveTranslator;
+    private final CheckPlayerWin checkPlayerWin;
+    private final CheckComputerWin checkComputerWin;
+    private final GameStateDisplayer gameStateDisplayer;
+    private final PlayerNameReader playerNameReader;
+    private final CommandHandler commandHandler;
+    private final GameField gameField = GameField.getInstance();
 
     public GameLoop(GameField gameField) {
         this.gameFieldReader = new GameFieldReader(gameField);
         this.gameFieldSaver = new GameFieldSaver(gameField);
-        this.gameStepHandler = new GameStepHandler(gameField);
+        this.verifyNotFull = new VerifyNotFull(gameField);
         this.gameStateDisplayer = new GameStateDisplayer(gameField);
         this.playerNameReader = new PlayerNameReader();
         this.commandHandler = new CommandHandler(gameField);
+        this.moveApplier = new MoveApplier(gameField);
+        this.moveTranslator = new MoveTranslator();
+        this.checkPlayerWin = new CheckPlayerWin(gameField);
+        this.checkComputerWin = new CheckComputerWin(gameField);
     }
 
     public void gameLoop(){
@@ -47,9 +59,9 @@ public class GameLoop {
         // The player always makes the first move
         System.out.println(playerName + " starts!");
 
-        boolean playerWon = gameStepHandler.checkPlayerWinState();
-        boolean computerWon = gameStepHandler.checkComputerWinState();
-        boolean isFilled = gameStepHandler.isFieldFilled();
+        boolean playerWon = checkPlayerWin.checkPlayerWinState();
+        boolean computerWon = checkComputerWin.checkComputerWinState();
+        boolean isFilled = verifyNotFull.isFieldFilled();
 
         while ( (!playerWon && !computerWon) && !isFilled){
             System.out.println("Valid Commands: 'place' / 'save' / 'load'");
@@ -58,19 +70,19 @@ public class GameLoop {
 
             commandHandler.commandExecuter();
             //Check if the player has won yet
-            playerWon = gameStepHandler.checkPlayerWinState();
+            playerWon = checkPlayerWin.checkPlayerWinState();
             if (playerWon) break;   //if the player won exit the game loop.
             System.out.println("Computer makes a move!");
-            int computerMove = gameStepHandler.computerMadeMove();
-            while (!gameStepHandler.checkColumn(computerMove)) {
-                computerMove = gameStepHandler.computerMadeMove();
+            int computerMove = moveApplier.computerMadeMove();
+            while (!moveApplier.checkColumn(computerMove)) {
+                computerMove = moveApplier.computerMadeMove();
             }
 
             //Applying the computerMove to gameField
-            gameStepHandler.applyMove(computerMove, "computer");
+            moveApplier.applyMove(computerMove, "computer");
 
             //Check if the computer has won yet
-            computerWon = gameStepHandler.checkComputerWinState();
+            computerWon = checkComputerWin.checkComputerWinState();
         }
         if (playerWon) System.out.println(playerName + " has won!");
         else if (computerWon) System.out.println("Computer has won!");

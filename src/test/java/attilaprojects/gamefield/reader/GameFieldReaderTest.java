@@ -1,5 +1,6 @@
-package attilaprojects.gamefield;
+package attilaprojects.gamefield.reader;
 
+import attilaprojects.gamefield.GameField;
 import attilaprojects.gamefield.reader.GameFieldReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

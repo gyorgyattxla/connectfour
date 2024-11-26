@@ -1,8 +1,8 @@
-package attilaprojects.player;
+package attilaprojects.player.namereader;
 
 import java.util.Scanner;
 
-public class PlayerNameReader implements PlayerNameReaderInterface{
+public class PlayerNameReader implements PlayerNameReaderInterface {
 
     @Override
     public String inputPlayerName() {
