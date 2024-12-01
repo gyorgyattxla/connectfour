@@ -1,12 +1,26 @@
 package attilaprojects.player.score;
 
-import attilaprojects.gamestephandler.applier.MoveApplier;
-
 public class PlayerScore {
-    private final int startingPlayerScore = 25; //42 possible moves/2 +4 = 25, making 21 the perfect score
+    private String playerName;
+    private int winAmount;
 
-    /** Every time a player makes a move the score decreases **/
-    private int decreaseScore(){
-        return startingPlayerScore - MoveApplier.getPlayerMovesMade();
+    public PlayerScore(String playerName, int winAmount) {
+        this.playerName = playerName;
+        this.winAmount = winAmount;
+    }
+
+    // Getters
+    public String getPlayerName() { return playerName; }
+    public int getWinAmount() { return winAmount; }
+
+    // Setters
+
+    public void incrementWinCount() {
+        this.winAmount++;
+    }
+
+    @Override
+    public String toString() {
+        return "Player: " + playerName + ", Best Score: " + ", Wins: " + winAmount;
     }
 }
