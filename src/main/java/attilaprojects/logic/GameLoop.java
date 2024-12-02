@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class GameLoop {
     private final GameFieldReader gameFieldReader;
-    private final GameFieldSaver gameFieldSaver;
+    //private final GameFieldSaver gameFieldSaver;
     private final VerifyNotFull verifyNotFull;
     private final MoveApplier moveApplier;
     private final CheckPlayerWin checkPlayerWin;
@@ -31,7 +31,7 @@ public class GameLoop {
 
     public GameLoop(GameField gameField) {
         this.gameFieldReader = new GameFieldReader(gameField);
-        this.gameFieldSaver = new GameFieldSaver(gameField);
+        //this.gameFieldSaver = new GameFieldSaver(gameField);
         this.verifyNotFull = new VerifyNotFull(gameField);
         this.gameStateDisplayer = new GameStateDisplayer(gameField);
         this.playerNameReader = new PlayerNameReader();
@@ -112,9 +112,10 @@ public class GameLoop {
             wantToSave = scanner.nextLine();
         }
         if (wantToSave.equals("Y")){
+            GameFieldSaver gameFieldSaver = new GameFieldSaver(gameField);
             System.out.print("Enter filename: ");
             String inputFilename = scanner.nextLine();
-            gameFieldSaver.saveFieldToFile(gameField, inputFilename);
+            gameFieldSaver.saveFieldToFile(inputFilename);
         }
     }
 }

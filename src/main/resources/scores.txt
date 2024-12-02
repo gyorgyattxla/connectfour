@@ -1,2 +1,3 @@
 player2,1
-Attxla,2
+Attxla,11
+galab,1

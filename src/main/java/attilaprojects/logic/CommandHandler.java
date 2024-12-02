@@ -64,7 +64,7 @@ public class CommandHandler {
                     Scanner scanner = new Scanner(System.in);
                     System.out.print("Enter filename: ");
                     String inputFilename = scanner.nextLine();
-                    gameFieldSaver.saveFieldToFile(gameField, inputFilename);
+                    gameFieldSaver.saveFieldToFile(inputFilename);
                     validCommand = true;
                     break;
                 }

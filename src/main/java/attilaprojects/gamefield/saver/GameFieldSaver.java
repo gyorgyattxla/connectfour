@@ -16,7 +16,7 @@ public class GameFieldSaver implements GameFieldSaverInterface {
     }
 
     @Override
-    public boolean saveFieldToFile(GameField gameField, String filename) {
+    public boolean saveFieldToFile(String filename) {
         try {
             // Get the path to the resources directory
             String resourcePath = Paths.get("src", "main", "resources", filename).toString();

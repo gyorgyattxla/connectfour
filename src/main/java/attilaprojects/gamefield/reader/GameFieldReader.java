@@ -2,29 +2,25 @@ package attilaprojects.gamefield.reader;
 
 import attilaprojects.gamefield.GameField;
 
+import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class GameFieldReader implements GameFieldReaderInterface{
+public class GameFieldReader implements GameFieldReaderInterface {
     private final GameField gameField;
 
-    public GameFieldReader(GameField gameField) {
+    public GameFieldReader(final GameField gameField) {
         this.gameField = gameField;
     }
 
-    public boolean loadFieldFromFile(String inputFileName) {
+    final public boolean loadFieldFromFile(String inputFileName) {
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(inputFileName);
+        String filePath = new File(System.getProperty("user.dir"), inputFileName).toString();
 
-        // Check if the file was found
-        if (inputStream == null) {
-            System.err.println("Error: File not found in classpath.");
-            setEmptyField();
-            return false;
-        }
-
-        try (Scanner scanner = new Scanner(inputStream)) {
+        try (InputStream inputStream = Files.newInputStream(Paths.get(filePath));
+             Scanner scanner = new Scanner(inputStream)) {
             char[][] loadedField = new char[gameField.getRowCount()][gameField.getColCount()];
             for (int i = 0; i < gameField.getRowCount(); i++) {
                 String line = scanner.nextLine();
