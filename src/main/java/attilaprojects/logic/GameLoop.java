@@ -10,9 +10,9 @@ import attilaprojects.gamestephandler.winhandler.computer.CheckComputerWin;
 import attilaprojects.gamestephandler.winhandler.player.CheckPlayerWin;
 import attilaprojects.player.namereader.PlayerNameReader;
 import attilaprojects.player.score.PlayerScore;
-import attilaprojects.player.score.loader.PlayerScoreLoader;
-import attilaprojects.player.score.saver.PlayerScoreSaver;
+import attilaprojects.player.score.database.ScoreDatabase;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class GameLoop {
@@ -31,7 +31,6 @@ public class GameLoop {
 
     public GameLoop(GameField gameField) {
         this.gameFieldReader = new GameFieldReader(gameField);
-        //this.gameFieldSaver = new GameFieldSaver(gameField);
         this.verifyNotFull = new VerifyNotFull(gameField);
         this.gameStateDisplayer = new GameStateDisplayer(gameField);
         this.playerNameReader = new PlayerNameReader();
@@ -49,7 +48,7 @@ public class GameLoop {
         return playerWin;
     }
 
-    public void gameLoop(){
+    public void gameLoop() throws SQLException {
 
         for (int i = 0; i < 3; i++) {
             System.out.println("PLAYING CONNECT FOUR");
@@ -68,9 +67,6 @@ public class GameLoop {
         playerName = playerNameReader.inputPlayerName();
         // The player always makes the first move
         System.out.println(playerName + " starts!");
-
-        PlayerScoreLoader playerScoreLoader = new PlayerScoreLoader();
-        playerScoreLoader.loadScoresFromFile("scores.txt");
 
         boolean playerWon = checkPlayerWin.checkPlayerWinState();
         boolean computerWon = checkComputerWin.checkComputerWinState();
@@ -99,8 +95,13 @@ public class GameLoop {
         }
         if (playerWon){
             System.out.println(playerName + " has won!");
-            PlayerScoreSaver playerScoreSaver = new PlayerScoreSaver("scores.txt");
-            playerScoreSaver.savePlayerScore(playerName);
+            ScoreDatabase scoreDatabase = new ScoreDatabase();
+            int score = scoreDatabase.loadPlayerStats(scoreDatabase.getConnection(), playerName);
+            PlayerScore playerScore = new PlayerScore(playerName, score);
+            playerScore.incrementWinCount();
+            scoreDatabase.saveOrUpdateData(scoreDatabase.getConnection(),
+                    playerName,
+                    playerScore.getWinAmount());
         }
         else if (computerWon) System.out.println("Computer has won!");
         if (isFilled) System.out.println("The board has been filled...");

@@ -15,6 +15,10 @@ public class MoveApplier {
         playerMovesMade = 0;
     }
 
+    public static void setMovesMade(int movesMade) {
+        MoveApplier.movesMade = movesMade;
+    }
+
     public static int getMovesMade() {
         return movesMade;
     }

@@ -21,6 +21,6 @@ public class PlayerScore {
 
     @Override
     public String toString() {
-        return "Player: " + playerName + ", Best Score: " + ", Wins: " + winAmount;
+        return "Player: " + playerName + " , Wins: " + winAmount;
     }
 }

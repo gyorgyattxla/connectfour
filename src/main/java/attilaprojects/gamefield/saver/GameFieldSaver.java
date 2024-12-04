@@ -19,11 +19,10 @@ public class GameFieldSaver implements GameFieldSaverInterface {
     public boolean saveFieldToFile(String filename) {
         try {
             // Get the path to the resources directory
-            String resourcePath = Paths.get("src", "main", "resources", filename).toString();
-            File file = new File(resourcePath);
+            String filePath = new File(System.getProperty("user.dir"), filename).toString();
 
             // Write to the file
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
                 for (int row = 0; row < gameField.getField().length; row++) {
                     for (int col = 0; col < gameField.getField()[row].length; col++) {
                         writer.write(gameField.getField()[row][col]);
