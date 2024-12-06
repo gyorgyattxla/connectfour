@@ -12,6 +12,9 @@ import attilaprojects.player.namereader.PlayerNameReader;
 import attilaprojects.player.score.PlayerScore;
 import attilaprojects.player.score.database.ScoreDatabase;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -93,19 +96,34 @@ public class GameLoop {
             //Check if the computer has won yet
             computerWon = checkComputerWin.checkComputerWinState();
         }
+        ScoreDatabase scoreDatabase = new ScoreDatabase();
+        Connection connection = scoreDatabase.getConnection();
         if (playerWon){
             System.out.println(playerName + " has won!");
-            ScoreDatabase scoreDatabase = new ScoreDatabase();
+
             int score = scoreDatabase.loadPlayerStats(scoreDatabase.getConnection(), playerName);
             PlayerScore playerScore = new PlayerScore(playerName, score);
             playerScore.incrementWinCount();
-            scoreDatabase.saveOrUpdateData(scoreDatabase.getConnection(),
+            scoreDatabase.saveOrUpdateData(connection,
                     playerName,
                     playerScore.getWinAmount());
         }
         else if (computerWon) System.out.println("Computer has won!");
         if (isFilled) System.out.println("The board has been filled...");
         gameStateDisplayer.displayGameState(playerName);
+        try {
+            String query = "SELECT * FROM scores";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            scoreDatabase.displayData(resultSet);
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Want to save this field? [USE Y / N]");
         String wantToSave = scanner.nextLine();
         while( !(wantToSave.equals("Y")) && !(wantToSave.equals("N"))){

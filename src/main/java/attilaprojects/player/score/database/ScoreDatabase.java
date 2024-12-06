@@ -35,7 +35,7 @@ public class ScoreDatabase {
     }
 
     // New method to display player names and scores
-    private void displayData(ResultSet rs) throws SQLException {
+    public void displayData(ResultSet rs) throws SQLException {
         while (rs.next()) {
             String playerName = rs.getString("playername");
             int score = rs.getInt("score");
@@ -50,9 +50,9 @@ public class ScoreDatabase {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {  // If the player is found
                     score = rs.getInt("score");
-                    System.out.println("Player: " + playerName + ", Score: " + score);
+                    //System.out.println("Player: " + playerName + ", Score: " + score);
                 } else {
-                    System.out.println("No data found for player: " + playerName);
+                    //System.out.println("No data found for player: " + playerName);
                     return 0;
                 }
             }
